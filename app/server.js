@@ -25,7 +25,7 @@ function getFeedItemSync(feedItemId){
   feedItem.contents.author=
       readDocument('users',feedItem.contents.author);
   //Resollv comment author.
-  feedItem.comments.foreach((comment) =>{
+  feedItem.comments.forEach((comment) =>{
     comment.author = readDocument('users',comment.author);
   });
   return feedItem;

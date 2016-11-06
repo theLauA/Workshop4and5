@@ -8,15 +8,15 @@ export default class CommentEntry extends React.Component {
           PIC
         </div>
         <div className="media-body">
-          <div classNmae="input-group">
+          <div className="input-group">
             <input type="text" className="form-control"
               placeholder="Write a comment.."/>
               <span className="input-group-btn">
                 <button className="btn btn-default" type="button">
                   <span className="glyphicon glyphicon-camera"></span>
                 </button>
-                <button classNae="btn btn-default" type="button">
-
+                <button className="btn btn-default" type="button">
+                   ☺
                 </button>
               </span>
             </div>
