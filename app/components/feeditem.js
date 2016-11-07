@@ -70,6 +70,8 @@ export default class FeedItem extends React.Component {
     return liked;
   }
 
+
+
   render() {
     var data = this.state;
     var contents;
@@ -145,7 +147,10 @@ export default class FeedItem extends React.Component {
             return(
               <Comment key={i}
                        author={comment.author}
-                       postDate={comment.postDate}>
+                       postDate={comment.postDate}
+                       likeCounter={comment.likeCounter}
+                       threadId={this.state._id}
+                       commentId={comment._id}>
                        {comment.contents}
               </Comment>
             );

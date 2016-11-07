@@ -54,17 +54,22 @@ var initialData = {
       // List of comments on the post
       "comments": [
         {
+
+          "_id": 1,
           // The author of the comment.
           "author": 2,
           // The contents of the comment.
           "contents": "hope everything is ok!",
           // The date the comment was posted.
           // 01/24/16 22:00 EST
+          "likeCounter": [],
           "postDate": 1453690800000
         },
         {
+          "_id": 2,
           "author": 3,
           "contents": "sending hugs your way",
+          "likeCounter": [],
           "postDate": 1453690800000
         }
       ]

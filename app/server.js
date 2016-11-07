@@ -27,6 +27,7 @@ function getFeedItemSync(feedItemId){
   //Resollv comment author.
   feedItem.comments.forEach((comment) =>{
     comment.author = readDocument('users',comment.author);
+//    comment.likeCounter =comment.likeCounter.map((id) => readDocument('users', id));
   });
   return feedItem;
 }
@@ -99,8 +100,10 @@ export function postComment(feedItemId, author, contents, cb) {
   // document in the database.
   var feedItem = readDocument('feedItems', feedItemId);
   feedItem.comments.push({
+    "_id":feedItem.comments.length + 1,
     "author": author,
     "contents": contents,
+    "likeCounter":[],
     "postDate": new Date().getTime()
   });
   writeDocument('feedItems', feedItem);
@@ -150,5 +153,38 @@ export function unlikeFeedItem(feedItemId, userId, cb) {
   }
   // Return a resolved version of the likeCounter
   emulateServerReturn(feedItem.likeCounter.map((userId) =>
+  readDocument('users', userId)), cb);
+}
+
+export function likeComment(feedItemId, userId, commentId, cb){
+  var feedItem = readDocument('feedItems', feedItemId);
+  var targetComment;
+  feedItem.comments.forEach((comment) =>{
+      if(comment._id == commentId)
+        targetComment = comment;
+  });
+
+  targetComment.likeCounter.push(userId);
+  writeDocument('feedItems', feedItem);
+
+  emulateServerReturn(targetComment.likeCounter.map((userId) =>
+  readDocument('users', userId)), cb);
+}
+
+
+export function unlikeComment(feedItemId, userId, commentId, cb) {
+  var feedItem = readDocument('feedItems', feedItemId);
+  var targetComment;
+  feedItem.comments.forEach((comment) =>{
+      if(comment._id == commentId)
+        targetComment = comment;
+  });
+  var userIndex = targetComment.likeCounter.indexOf(userId);
+  if (userIndex !== -1) {
+    targetComment.likeCounter.splice(userIndex, 1);
+    writeDocument('feedItems', feedItem);
+  }
+  // Return a resolved version of the likeCounter
+  emulateServerReturn(targetComment.likeCounter.map((userId) =>
   readDocument('users', userId)), cb);
 }
